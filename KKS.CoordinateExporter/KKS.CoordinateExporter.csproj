@@ -20,7 +20,7 @@
     
     <!-- 引用固定在仓库根 bin/；不要改成游戏目录。 -->
     
-    <RefDir Condition="'$(RefDir)' == ''">$(MSBuildThisFileDirectory)..\bin</RefDir>
+    <RefDir Condition="'$(RefDir)' == ''">$(MSBuildThisFileDirectory)..\lib</RefDir>
 
     <!-- 只有 Deploy=true 时才用到 GameDir -->
     <GameDir Condition="'$(GameDir)' == ''">$(MSBuildThisFileDirectory)..\BepInEx_win_x64_5.4.23.5</GameDir>
