@@ -19,7 +19,7 @@ namespace KKS.CoordinateExporter
 
         private const int Supersample = 3;
         private const float VerticalFov = 35f;
-        // 1.0 = 包围盒的投影刚好贴住画面边缘；大于 1 会整体后退、留出空白。
+        
         private const float FitScale = 0.5f;
 
         // 距离下限，避免退化包围盒时相机贴到角色脸上或穿过近裁剪面。

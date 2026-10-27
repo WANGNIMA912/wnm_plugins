@@ -67,7 +67,7 @@ namespace KKS.CoordinateExporter
             {
                 // 补丁失败不影响导出：退回手动触发 KKAPI 的保存事件，
                 // 只是日志里会多一条 "outside chara maker" 报错。
-                Log.LogError("给 MakerAPI.GetCharacterControl 打补丁失败，将退回手动触发 KKAPI 保存事件: " + ex);
+                Log.LogError("Failed to patch MakerAPI.GetCharacterControl; falling back to manually raising the KKAPI save event: " + ex);
             }
 
             string dir;
@@ -81,7 +81,7 @@ namespace KKS.CoordinateExporter
             }
 
             Log.LogInfo(string.Format(
-                "{0} {1} 已加载。快捷键 {2}，导出目录 {3}。",
+                "{0} {1} loaded. Hotkey {2}, export directory {3}.",
                 PluginName, PluginVersion, ExportHotkey.Value, dir));
         }
 
@@ -98,7 +98,7 @@ namespace KKS.CoordinateExporter
 
             if (!StudioAPI.InsideStudio)
             {
-                Log.LogWarning("工作室还没有加载完成，暂时不能导出。");
+                Log.LogWarning("Studio is not fully loaded yet, cannot export.");
                 ExportToast.Failure("工作室还没有加载完成，暂时不能导出。", "Studio is not ready yet, cannot export.");
                 return;
             }
@@ -109,7 +109,7 @@ namespace KKS.CoordinateExporter
             }
             catch (Exception ex)
             {
-                Log.LogError("导出服装卡时发生异常: " + ex);
+                Log.LogError("Exception while exporting coordinate card: " + ex);
                 ExportToast.Failure("导出时发生异常，详见日志。", "Export failed, see log for details.");
             }
         }
@@ -130,7 +130,7 @@ namespace KKS.CoordinateExporter
             }
             catch (Exception ex)
             {
-                Log.LogWarning("移除 Harmony 补丁时出错: " + ex.Message);
+                Log.LogWarning("Failed to unpatch Harmony: " + ex.Message);
             }
         }
     }

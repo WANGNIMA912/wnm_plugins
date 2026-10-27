@@ -1,4 +1,4 @@
-# bin/ — 编译引用程序集
+# lib/ — 编译引用程序集
 
 本目录是 **KKS.CoordinateExporter 的编译引用缓存**，从本机游戏目录复制而来。
 目的是让 `dotnet build <工程>.csproj` **不再依赖游戏安装目录**。
@@ -8,7 +8,7 @@
 - 来源游戏：`E:\kk\[ScrewThisNoise] Koikatsu Sunshine EX BetterRepack R12`
 - 生成日期：2026-10-19
 - 共 13 个 DLL，总计 8654848 字节；当前 csproj 引用其中 11 个
-- `bin/` 已被 `.gitignore` 忽略（游戏 DLL 不进入版本库）
+- `lib/` 已被 `.gitignore` 忽略（游戏 DLL 不进入版本库）
 
 ## 文件清单
 

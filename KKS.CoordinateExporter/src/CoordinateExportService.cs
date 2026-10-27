@@ -54,7 +54,7 @@ namespace KKS.CoordinateExporter
 
             if (targets.Count == 0)
             {
-                CoordinateExporterPlugin.Log.LogWarning("没有选中任何角色，未导出服装卡。");
+                CoordinateExporterPlugin.Log.LogWarning("No selected character, nothing exported.");
                 ExportToast.Failure("没有选中角色，未导出服装卡。", "No character selected, nothing exported.");
                 return;
             }
@@ -66,7 +66,7 @@ namespace KKS.CoordinateExporter
             }
             catch (Exception ex)
             {
-                CoordinateExporterPlugin.Log.LogError("导出目录无效: " + ex.Message);
+                CoordinateExporterPlugin.Log.LogError("Invalid export directory: " + ex.Message);
                 ExportToast.Failure("导出目录无效，未导出服装卡。", "Export directory is invalid, nothing exported.");
                 return;
             }
@@ -77,7 +77,7 @@ namespace KKS.CoordinateExporter
             }
             catch (Exception ex)
             {
-                CoordinateExporterPlugin.Log.LogError("无法创建导出目录 " + dir + ": " + ex.Message);
+                CoordinateExporterPlugin.Log.LogError("Cannot create export directory " + dir + ": " + ex.Message);
                 ExportToast.Failure("无法创建导出目录，未导出服装卡。", "Cannot create export directory, nothing exported.");
                 return;
             }
@@ -99,7 +99,7 @@ namespace KKS.CoordinateExporter
                     catch (Exception ex)
                     {
                         failed++;
-                        CoordinateExporterPlugin.Log.LogError("导出角色时发生异常: " + ex);
+                        CoordinateExporterPlugin.Log.LogError("Exception while exporting character: " + ex);
                     }
                 }
             }
@@ -109,7 +109,7 @@ namespace KKS.CoordinateExporter
             }
 
             CoordinateExporterPlugin.Log.LogInfo(string.Format(
-                "服装卡导出结束：成功 {0} 个，失败 {1} 个，目录 {2}", exported.Count, failed, dir));
+                "Export finished: {0} succeeded, {1} failed, directory {2}", exported.Count, failed, dir));
 
             if (exported.Count > 0)
             {
@@ -241,7 +241,7 @@ namespace KKS.CoordinateExporter
             if (KkapiSaveHook == null)
             {
                 CoordinateExporterPlugin.Log.LogError(
-                    "找不到 KKAPI.Chara.CharacterApi.OnCoordinateBeingSaved，ABMX / DBDE 数据可能没有写入。");
+                    "KKAPI.Chara.CharacterApi.OnCoordinateBeingSaved not found; ABMX / DBDE data may not have been written.");
                 return;
             }
 
@@ -254,7 +254,7 @@ namespace KKS.CoordinateExporter
                 var inner = ex is System.Reflection.TargetInvocationException && ex.InnerException != null
                     ? ex.InnerException
                     : ex;
-                CoordinateExporterPlugin.Log.LogError("手动触发 KKAPI 保存链失败: " + inner);
+                CoordinateExporterPlugin.Log.LogError("Failed to manually raise the KKAPI save chain: " + inner);
             }
         }
 
