@@ -7,7 +7,7 @@
 
 - 来源游戏：`E:\kk\[ScrewThisNoise] Koikatsu Sunshine EX BetterRepack R12`
 - 生成日期：2026-10-19
-- 共 13 个 DLL，总计 8654848 字节；当前 csproj 引用其中 11 个
+- 共 15 个 DLL，总计 9160704 字节；当前各 csproj 引用其中 11 个（另加 `Timeline.dll` 供 SBR11 两个插件做时间轴联动）
 - `lib/` 已被 `.gitignore` 忽略（游戏 DLL 不进入版本库）
 
 ## 文件清单
@@ -27,6 +27,8 @@
 | `0Harmony.dll` | `BepInEx\core\0Harmony.dll` | 204800 | `1a21cc03424fc82c3dd1346905d16494536b9595ae4162228d99fb7c285c1031` | BepInEx 5 自带 Harmony 2.9（CoordinateExporter 打 MakerAPI 补丁用） |
 | `KKS_ExtensibleSaveFormat.dll` | `BepInEx\plugins\KKS_BepisPlugins\KKS_ExtensibleSaveFormat.dll` | 70656 | `120de0a577e82ec5dddc3f5adf31798faaf33f1b3ad143e6a39cd4e9ed13065f` | ESF 21.1.4（读写服装卡扩展数据：ABMX / DBDE） |
 | `UnityEngine.ImageConversionModule.dll` | `CharaStudio_Data\Managed\UnityEngine.ImageConversionModule.dll` | 12288 | `eb4c9c86a7e8ccfe725870e74956a291119a0dd26786a7ed1620340761789ae4` | `Texture2D.EncodeToPNG`（CoordinateExporter 生成卡片缩略图） |
+| `UnityEngine.AssetBundleModule.dll` | `KoikatsuSunshine_Data\Managed\UnityEngine.AssetBundleModule.dll` | 20992 | `117c73d2f2d5c1dc305042a4c6234eb6604ccaef638ba9b59b39cf577ccced55` | `AssetBundle.LoadFromMemory`（ModernGraphicEffect 的 SSR shader bundle） |
+| `Timeline.dll` | `BepInEx\plugins\Timeline.dll` | 484864 | `c34eb9b0ef35bf02928cb475f16f28a529a2a07f97c2550c2ce2098353504e7a` | Timeline 1.5.6（KK_SBR11SockPull / KK_SBR11PantyPull 注册时间轴参数用；软依赖，`<Private>false</Private>`） |
 
 ## 未复制（不需要参与编译）
 

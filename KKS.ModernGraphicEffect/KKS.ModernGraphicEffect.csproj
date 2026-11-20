@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>KKS.ModernGraphicEffect</AssemblyName>
+    <RootNamespace>KKS.ModernGraphicEffect</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <Version>0.2.0</Version>
+
+    <!-- 版本号唯一来源：<Version>。编译时生成 partial class 里的 PluginVersion 常量。 -->
+    <PluginVersionFile>$(MSBuildProjectDirectory)\obj\$(Configuration)\$(TargetFramework)\PluginVersion.g.cs</PluginVersionFile>
+
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- 编译引用统一放在仓库根 lib/，不要改成游戏目录。 -->
+    <RefDir Condition="'$(RefDir)' == ''">$(MSBuildThisFileDirectory)..\lib</RefDir>
+
+    <!-- 只有 Deploy=true 时才用到 GameDir -->
+    <GameDir Condition="'$(GameDir)' == ''">$(MSBuildThisFileDirectory)..\BepInEx_win_x64_5.4.23.5</GameDir>
+    <DeployDir Condition="'$(DeployDir)' == ''">$(GameDir)\BepInEx\plugins\KKS.ModernGraphicEffect</DeployDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="BepInEx"><HintPath>$(RefDir)\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(RefDir)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(RefDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(RefDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(RefDir)\UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(RefDir)\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(RefDir)\UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(RefDir)\UnityEngine.AssetBundleModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(PluginVersionFile)" />
+    <EmbeddedResource Include="resources\kks_ssr" LogicalName="KKS.ModernGraphicEffect.kks_ssr" />
+  </ItemGroup>
+
+  <!-- 从 csproj 的 <Version> 生成 PluginVersion，避免源码与工程文件版本漂移。 -->
+  <Target Name="GeneratePluginVersion" BeforeTargets="CoreCompile">
+    <MakeDir Directories="$(MSBuildProjectDirectory)\obj\$(Configuration)\$(TargetFramework)" />
+    <ItemGroup>
+      <_PluginVersionLine Include="namespace KKS.ModernGraphicEffect" />
+      <_PluginVersionLine Include="{" />
+      <_PluginVersionLine Include="    public partial class ModernGraphicEffectPlugin" />
+      <_PluginVersionLine Include="    {" />
+      <_PluginVersionLine Include="        public const string PluginVersion = &quot;$(Version)&quot;%3B" />
+      <_PluginVersionLine Include="    }" />
+      <_PluginVersionLine Include="}" />
+    </ItemGroup>
+    <WriteLinesToFile
+      File="$(PluginVersionFile)"
+      Lines="@(_PluginVersionLine)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <FileWrites Include="$(PluginVersionFile)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CheckRefs" BeforeTargets="BeforeBuild">
+    <Error Condition="!Exists('$(RefDir)\BepInEx.dll')"
+           Text="缺少编译引用：$(RefDir)\BepInEx.dll&#10;请把依赖复制到仓库根 lib/（清单见 lib/MANIFEST.md）。" />
+    <Error Condition="!Exists('$(RefDir)\Assembly-CSharp.dll')"
+           Text="缺少编译引用：$(RefDir)\Assembly-CSharp.dll&#10;请把 KoikatsuSunshine_Data\Managed 下的依赖复制到仓库根 lib/。" />
+  </Target>
+
+  <!-- dotnet build ... -p:Deploy=true -p:GameDir="..." -->
+  <Target Name="DeployToGame" AfterTargets="Build" Condition="'$(Deploy)' == 'true'">
+    <MakeDir Directories="$(DeployDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DeployDir)" />
+    <Message Importance="high" Text="Deployed $(TargetFileName) -> $(DeployDir)" />
+  </Target>
+
+</Project>
