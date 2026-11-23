@@ -7,7 +7,7 @@
 
 - 来源游戏：`E:\kk\[ScrewThisNoise] Koikatsu Sunshine EX BetterRepack R12`
 - 生成日期：2026-10-19
-- 共 15 个 DLL，总计 9160704 字节；当前各 csproj 引用其中 11 个（另加 `Timeline.dll` 供 SBR11 两个插件做时间轴联动）
+- 共 16 个 DLL，总计 9218048 字节；各 csproj 按需引用（另加 `Timeline.dll` 供 SBR11 两个插件做时间轴联动）
 - `lib/` 已被 `.gitignore` 忽略（游戏 DLL 不进入版本库）
 
 ## 文件清单
@@ -19,6 +19,7 @@
 | `Assembly-CSharp.dll` | `KoikatsuSunshine_Data\Managed\Assembly-CSharp.dll` | 6185472 | `d6a1fc24375fdc05165dfd268f524df373a844ef43847dd5818e13b0c7dd9924` | 游戏本体（Studio.Studio / CameraControl 等） |
 | `UnityEngine.dll` | `KoikatsuSunshine_Data\Managed\UnityEngine.dll` | 84992 | `79e04323bf6c4715586f158e24b40be18cb754ad5da6c3d7b755b699df5cad5a` | Unity 引擎门面程序集 |
 | `UnityEngine.CoreModule.dll` | `KoikatsuSunshine_Data\Managed\UnityEngine.CoreModule.dll` | 1005056 | `620f0e9d742e1e1a28d74bd248464b41df01154e8def4fac08e6a9ffcab46e52` | Unity 核心（GameObject / MonoBehaviour / Input 基础） |
+| `UnityEngine.AudioModule.dll` | `CharaStudio_Data\Managed\UnityEngine.AudioModule.dll` | 57344 | `d42dae67434d16375e86d1410d5de19eb9652bb6a4967b1a4a7a46a52ddabad3` | `AudioSource` / `AudioClip`（SoundItemFix 调整 3D 声源用） |
 | `UnityEngine.IMGUIModule.dll` | `KoikatsuSunshine_Data\Managed\UnityEngine.IMGUIModule.dll` | 156160 | `10fefeb0cd80584cb71f0b9fc024568ae261662487a0eaf351ebaef206e05e91` | IMGUI（GUILayout / GUI / GUIStyle） |
 | `UnityEngine.InputLegacyModule.dll` | `KoikatsuSunshine_Data\Managed\UnityEngine.InputLegacyModule.dll` | 25600 | `565c72e9a82dec16f45f43c97176dc6f8470d38adcec78fd146d696420483b49` | 旧版 Input（Input.GetKeyDown / mousePosition） |
 | `UnityEngine.TextRenderingModule.dll` | `KoikatsuSunshine_Data\Managed\UnityEngine.TextRenderingModule.dll` | 27648 | `a92759e1f33d8146a64764218b39b5511b0467b8da6a64da745cc1a856d5a0c8` | 字体（Font / FontStyle） |

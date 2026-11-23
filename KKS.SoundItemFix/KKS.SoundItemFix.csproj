@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>KKS.SoundItemFix</AssemblyName>
+    <RootNamespace>KKS.SoundItemFix</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <Version>1.0.0</Version>
+
+    <PluginVersionFile>$(MSBuildProjectDirectory)\obj\$(Configuration)\$(TargetFramework)\PluginVersion.g.cs</PluginVersionFile>
+
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RefDir Condition="'$(RefDir)' == ''">$(MSBuildThisFileDirectory)..\lib</RefDir>
+
+    <GameDir Condition="'$(GameDir)' == ''">$(MSBuildThisFileDirectory)..\BepInEx_win_x64_5.4.23.5</GameDir>
+    <DeployDir Condition="'$(DeployDir)' == ''">$(GameDir)\BepInEx\plugins\KKS.SoundItemFix</DeployDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="BepInEx"><HintPath>$(RefDir)\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(RefDir)\0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(RefDir)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(RefDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(RefDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AudioModule"><HintPath>$(RefDir)\UnityEngine.AudioModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(PluginVersionFile)" />
+  </ItemGroup>
+
+  <Target Name="GeneratePluginVersion" BeforeTargets="CoreCompile">
+    <MakeDir Directories="$(MSBuildProjectDirectory)\obj\$(Configuration)\$(TargetFramework)" />
+    <ItemGroup>
+      <_PluginVersionLine Include="namespace KKS.SoundItemFix" />
+      <_PluginVersionLine Include="{" />
+      <_PluginVersionLine Include="    public partial class SoundItemFixPlugin" />
+      <_PluginVersionLine Include="    {" />
+      <_PluginVersionLine Include="        public const string PluginVersion = &quot;$(Version)&quot;%3B" />
+      <_PluginVersionLine Include="    }" />
+      <_PluginVersionLine Include="}" />
+    </ItemGroup>
+    <WriteLinesToFile
+      File="$(PluginVersionFile)"
+      Lines="@(_PluginVersionLine)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <FileWrites Include="$(PluginVersionFile)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CheckRefs" BeforeTargets="BeforeBuild">
+    <Error Condition="!Exists('$(RefDir)\BepInEx.dll')" Text="缺少编译引用：$(RefDir)\BepInEx.dll" />
+    <Error Condition="!Exists('$(RefDir)\0Harmony.dll')" Text="缺少编译引用：$(RefDir)\0Harmony.dll" />
+    <Error Condition="!Exists('$(RefDir)\Assembly-CSharp.dll')" Text="缺少编译引用：$(RefDir)\Assembly-CSharp.dll" />
+    <Error Condition="!Exists('$(RefDir)\UnityEngine.dll')" Text="缺少编译引用：$(RefDir)\UnityEngine.dll" />
+    <Error Condition="!Exists('$(RefDir)\UnityEngine.CoreModule.dll')" Text="缺少编译引用：$(RefDir)\UnityEngine.CoreModule.dll" />
+    <Error Condition="!Exists('$(RefDir)\UnityEngine.AudioModule.dll')" Text="缺少编译引用：$(RefDir)\UnityEngine.AudioModule.dll" />
+  </Target>
+
+  <Target Name="DeployToGame" AfterTargets="Build" Condition="'$(Deploy)' == 'true'">
+    <MakeDir Directories="$(DeployDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DeployDir)" />
+    <Message Importance="high" Text="Deployed $(TargetFileName) -> $(DeployDir)" />
+  </Target>
+
+</Project>
