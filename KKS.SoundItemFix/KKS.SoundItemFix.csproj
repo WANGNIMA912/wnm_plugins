@@ -18,7 +18,7 @@
     <RefDir Condition="'$(RefDir)' == ''">$(MSBuildThisFileDirectory)..\lib</RefDir>
 
     <GameDir Condition="'$(GameDir)' == ''">$(MSBuildThisFileDirectory)..\BepInEx_win_x64_5.4.23.5</GameDir>
-    <DeployDir Condition="'$(DeployDir)' == ''">$(GameDir)\BepInEx\plugins\KKS.SoundItemFix</DeployDir>
+    <DeployDir Condition="'$(DeployDir)' == ''">$(GameDir)\BepInEx\plugins\KKS_SoundItemFix</DeployDir>
   </PropertyGroup>
 
   <ItemGroup>
